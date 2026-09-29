@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoomFlow — Product Demo</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap');
+    :root{--ink:#101c31;--coral:#ff684a;--paper:#f5f7fa;--line:#dfe5ed}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Manrope,Arial,sans-serif}.wrap{width:min(1060px,calc(100% - 32px));margin:auto;padding:30px 0 54px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:50px}.brand{font-size:23px;font-weight:800;letter-spacing:-1.6px}.brand i{font-style:normal;color:var(--coral)}a{color:inherit;text-decoration:none}.back{font-size:14px;font-weight:700;color:#637087}.eyebrow{font-size:11px;font-weight:800;letter-spacing:1.25px;color:#718097}.title{font-size:clamp(34px,6vw,65px);letter-spacing:-.07em;line-height:1;margin:12px 0 18px}.lead{max-width:630px;line-height:1.7;color:#647186;margin:0 0 34px}.player{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--ink);box-shadow:0 24px 70px #101c3120}.player video{display:block;width:100%;max-height:70vh}.caption{display:flex;justify-content:space-between;gap:16px;padding:15px 18px;background:#fff;color:#647186;font-size:13px}.caption b{color:var(--ink)}@media(max-width:520px){.top{margin-bottom:34px}.caption{display:block}.caption span{display:block;margin-top:4px}}
+  [data-lang]{display:none}html[lang="en"] [data-lang="uk"],html[lang="uk"] [data-lang="en"]{display:none}html[lang="en"] [data-lang="en"],html[lang="uk"] [data-lang="uk"]{display:revert}.top{gap:16px;flex-wrap:wrap}.language{display:flex;gap:4px}.language button{padding:7px 10px;border:1px solid #dfe5ed;border-radius:6px;background:white;color:#637087;cursor:pointer}.language button[aria-pressed="true"]{background:#101c31;color:white}</style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top"><a class="brand" href="./">ROOM<i>FLOW</i></a><a class="back" href="./"><span data-lang="en">← Product overview</span><span data-lang="uk">← Про продукт</span></a><div class="language" role="group" aria-label="Language"><button data-switch="en" aria-pressed="true">EN</button><button data-switch="uk" aria-pressed="false">УК</button></div></header>
+    <span class="eyebrow"><span data-lang="en">PRODUCT WALKTHROUGH · 26 SECONDS</span><span data-lang="uk">ПРЕЗЕНТАЦІЯ ПРОДУКТУ · 26 СЕКУНД</span></span>
+    <h1 class="title"><span data-lang="en">RoomFlow in action.</span><span data-lang="uk">RoomFlow у дії.</span></h1>
+    <p class="lead"><span data-lang="en">Explore the meeting-room calendar, find the best room with Smart Room Match, and move your meeting with confidence.</span><span data-lang="uk">Календар переговорних, Smart Room Match і захищене перенесення зустрічі — у короткому сценарії. Відео показує англійський інтерфейс.</span></p>
+    <div class="player">
+      <video id="demo-video" controls playsinline autoplay muted preload="auto" poster="assets/calendar-overview.png">
+        <source src="assets/roomflow-showcase.mp4" type="video/mp4" />
+        <span data-lang="en">Your browser does not support video.</span><span data-lang="uk">Ваш браузер не підтримує відео.</span>
+      </video>
+      <div class="caption"><b><span data-lang="en">RoomFlow product walkthrough</span><span data-lang="uk">Презентація продукту RoomFlow</span></b><span data-lang="en">English interface · 26 seconds</span><span data-lang="uk">Англійський інтерфейс · 26 секунд</span></div>
+    </div>
+  </main>
+  <script>
+    const buttons=document.querySelectorAll('[data-switch]');
+function changeLanguage(language){
+ const chosen=language==='uk'?'uk':'en';document.documentElement.lang=chosen;
+ buttons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.switch===chosen)));
+ try{localStorage.setItem('roomflow-site-language',chosen)}catch{}
+}
+let initial='en';try{initial=localStorage.getItem('roomflow-site-language')||'en'}catch{}
+changeLanguage(initial);buttons.forEach(button=>button.addEventListener('click',()=>changeLanguage(button.dataset.switch)));
+const demoVideo = document.getElementById('demo-video');
+    const startDemo = () => demoVideo.play().catch(() => {});
+    demoVideo.addEventListener('canplay', startDemo, { once: true });
+    window.addEventListener('load', startDemo, { once: true });
+  </script>
+</body>
+</html>
